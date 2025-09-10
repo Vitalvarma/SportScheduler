@@ -111,9 +111,12 @@ app.post('/create-session', async (req, res) => {
   try {
     const { sportId, creator, date, time, venue } = req.body;
 
+    console.log('Received create-session request with sportId:', sportId);
+
     // Check if the sport ID exists
     const sport = await Sport.findByPk(sportId);
     if (!sport) {
+      console.error('Sport not found for sportId:', sportId);
       return res.status(404).json({ error: 'Sport not found' });
     }
 
@@ -125,6 +128,8 @@ app.post('/create-session', async (req, res) => {
       time,
       venue,
     });
+
+    console.log('Session created successfully:', session.id);
 
     // Redirect to the admin dashboard after creating the session
     res.redirect('/admindashboard');
@@ -197,10 +202,63 @@ app.get('/players', async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   });
+// Function to seed default data
+async function seedDefaultData() {
+  try {
+    console.log('Seeding default data...');
+    
+    // Check if any admin exists
+    let admin = await Admin.findOne();
+    
+    // If no admin exists, create the default admin
+    if (!admin) {
+      console.log('No admin found, creating default admin...');
+      const hashedPassword = await bcrypt.hash('vitalvarma2', 10);
+      admin = await Admin.create({
+        firstName: 'System',
+        lastName: 'Admin',
+        email: 'vitalvarma2@gmail.com',
+        password: hashedPassword
+      });
+      console.log('Default admin created with ID:', admin.id);
+    }
+    
+    // Default sports to create
+    const defaultSports = ['basketball', 'football', 'cricket', 'volleyball'];
+    
+    // Create default sports only if they don't exist
+    for (const sportName of defaultSports) {
+      const existingSport = await Sport.findOne({ where: { name: sportName } });
+      if (!existingSport) {
+        const newSport = await Sport.create({
+          adminId: admin.id,
+          name: sportName
+        });
+        console.log(`Created default sport: ${sportName} with ID: ${newSport.id}`);
+      } else {
+        console.log(`Sport '${sportName}' already exists with ID: ${existingSport.id}, skipping creation`);
+      }
+    }
+    
+    // Log all existing sports with their IDs for debugging
+    const allSports = await Sport.findAll();
+    console.log('All sports in database:', allSports.map(sport => `${sport.name} (ID: ${sport.id})`));
+    
+    console.log('Default data seeding completed successfully');
+  } catch (error) {
+    console.error('Error seeding default data:', error);
+  }
+}
+
 // Sync the database and start the server
-sequelize.sync().then(() => {
-  app.listen(3000, () => {
-    console.log('Server is running on port 3000');
+sequelize.sync().then(async () => {
+  // Check if we need to seed default data (only if no sports exist)
+  const existingSports = await Sport.findAll();
+  if (existingSports.length === 0) {
+    await seedDefaultData();
+  }
+  app.listen(3001, () => {
+    console.log('Server is running on port 3001');
   });
 });
 
