@@ -9,74 +9,180 @@
   <!-- Add your CSS link here -->
   <style>
     body {
-      font-family: 'Arial', sans-serif;
-      background: linear-gradient(to right, #2c3e50, #3498db);
-      margin-top: 100px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      margin: 0;
+      padding: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      color: #2d1717;
+      min-height: 100vh;
+      color: #333;
     }
 
     .container {
-      max-width: 800px;
+      max-width: 900px;
+      width: 100%;
       text-align: center;
-      padding: 20px;
+      padding: 30px;
+      border-radius: 15px;
+      background-color: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 20px;
+    }
+
+    .player-list-container, .created-sessions-container, .create-session-container {
+      margin-top: 25px;
+      background-color: rgba(255, 255, 255, 0.9);
       border-radius: 10px;
-      background-color: rgba(255, 255, 255, 0.1);
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      padding: 25px;
+      display: none;
+      width: 100%;
+      max-width: 800px;
+    }
+
+    form {
+      padding: 20px;
+      margin: 20px 0;
+      font-size: 16px;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
-    .player-list-container, .created-sessions-container, .create-session-container {
-      margin-top: 20px;
-      background-color: rgba(255, 255, 255, 0.7);
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      padding: 20px;
-      display: none;
-
+    form label {
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #555;
     }
-    form{
-      padding: 20px;
-      margin: 20px;
-      font-size: 30px;
+
+    form input, form select {
+      width: 100%;
+      max-width: 300px;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    form button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+      margin-top: 10px;
+    }
+
+    form button:hover {
+      background-color: #45a049;
     }
 
     h1, h2 {
-      margin-bottom: 20px;
-      font-size: 40px;
+      margin-bottom: 25px;
+      color: #333;
+      font-weight: 300;
+    }
+
+    h1 {
+      font-size: 36px;
+    }
+
+    h2 {
+      font-size: 28px;
     }
 
     ul {
       list-style-type: none;
       padding: 0;
+      width: 100%;
     }
 
     li {
-      margin-bottom: 15px;
-      padding: 10px;
-      border-radius: 5px;
-      background-color: rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+      padding: 15px;
+      border-radius: 8px;
+      background-color: #f9f9f9;
       display: flex;
       flex-direction: column;
+      align-items: flex-start;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s;
+    }
+
+    li:hover {
+      transform: translateY(-2px);
+    }
+
+    li button {
+      background-color: #f44336;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-top: 10px;
+      transition: background-color 0.3s;
+    }
+
+    li button:hover {
+      background-color: #d32f2f;
     }
 
     strong {
-      color: #3498db;
+      color: #2196F3;
+      font-weight: bold;
     }
 
     .toggle-button {
-      margin-top: 10px;
+      margin-top: 15px;
     }
-    #column{
+
+    .toggle-button button {
+      background-color: #2196F3;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+
+    .toggle-button button:hover {
+      background-color: #1976D2;
+    }
+
+    #column {
       display: flex;
       flex-direction: column;
-      margin: 100px;
-      
+      width: 100%;
+      align-items: center;
+    }
+
+    a {
+      text-decoration: none;
+      color: white;
+      background-color: #333;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 16px;
+      transition: background-color 0.3s;
+      margin-bottom: 20px;
+    }
+
+    a:hover {
+      background-color: #555;
     }
   </style>
 </head>
